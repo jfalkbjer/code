@@ -1,0 +1,3 @@
+# Custom PropertySourceLoader to read property files with UTF-8.
+org.springframework.boot.env.PropertySourceLoader=\
+com.jifa.clnr.UTF8PropertySourceLoader
