@@ -17,6 +17,7 @@
 package com.jifa.clnr.exception.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.SpanAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { IllegalArgumentException.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest webRequest) {
-		String traceId = spanAccessor.getCurrentSpan().traceIdString();
-		Error error = new Error(traceId, HttpStatus.NOT_FOUND.value(), exception.getMessage());
+		Span span = spanAccessor.getCurrentSpan();
+		Error error = new Error(Span.idToHex(span.getTraceId()), HttpStatus.NOT_FOUND.value(), exception.getMessage());
 		return handleExceptionInternal(exception, error, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
 	}
 
