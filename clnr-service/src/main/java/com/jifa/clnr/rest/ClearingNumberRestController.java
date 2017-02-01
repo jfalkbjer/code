@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +44,13 @@ public class ClearingNumberRestController {
 	BankNameCache bankNameCache;
 
 	@RequestMapping(value = "/numbers")
-	public ResponseEntity<ClearingNumbers> getClearingNumbers(HttpEntity<String> httpEntity) {
+	public ClearingNumbers getClearingNumbers(HttpEntity<String> httpEntity) {
 		log.info("Request headers: {}", httpEntity.getHeaders());
 
 		List<String> numbers = new ArrayList<String>(bankNameCache.getClearingNumbers());
 		Collections.sort(numbers);
 
-		return ResponseEntity.ok(new ClearingNumbers(numbers));
+		return new ClearingNumbers(numbers);
 	}
 
 	/**
@@ -63,11 +62,14 @@ public class ClearingNumberRestController {
 	 * @return {@link ResponseEntity} of type {@link BankName}
 	 */
 	@RequestMapping(value = "/numbers/{clearingNumber}")
-	public ResponseEntity<BankName> getBankName(HttpEntity<String> httpEntity,
+	public BankName getBankName(HttpEntity<String> httpEntity,
 			@PathVariable(value = "clearingNumber") String clearingNumber) {
 		log.info("Request headers: {}", httpEntity.getHeaders());
 
-		return bankNameCache.contains(clearingNumber) ? ResponseEntity.ok(bankNameCache.getBankName(clearingNumber))
-				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		if (bankNameCache.contains(clearingNumber)) {
+			return bankNameCache.getBankName(clearingNumber);
+		}
+
+		throw new IllegalArgumentException("No bank name found for specified clearing number.");
 	}
 }
