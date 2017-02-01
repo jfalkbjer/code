@@ -23,7 +23,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * Main clearing number application.
  */
-@PropertySource("classpath:application-${application.profile}.properties")
+@PropertySource("classpath:application-${spring.profiles.active}.properties")
 @SpringBootApplication
 public class ClearingNumberServiceApplication {
 

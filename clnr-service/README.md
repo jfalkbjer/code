@@ -2,12 +2,6 @@
 
 A clearing number service to lookup the bank name for the specified clearing number.
 
-## Notes
-
-To be able to start the service you need to specify a profile:
-```
--Dapplication.profile=local
-```
 
 ## Running with curl
 
