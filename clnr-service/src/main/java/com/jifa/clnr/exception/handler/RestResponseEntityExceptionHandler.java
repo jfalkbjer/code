@@ -37,10 +37,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { IllegalArgumentException.class, Exception.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest webRequest) {
-		Span span = spanAccessor.getCurrentSpan();
+		String traceId = Span.idToHex(spanAccessor.getCurrentSpan().getTraceId());
 		HttpStatus httpStatus = getHttpStatus(exception);
+		Error error = new Error(traceId, httpStatus.value(), exception.getMessage());
 
-		Error error = new Error(Span.idToHex(span.getTraceId()), httpStatus.value(), exception.getMessage());
 		return handleExceptionInternal(exception, error, new HttpHeaders(), httpStatus, webRequest);
 	}
 
