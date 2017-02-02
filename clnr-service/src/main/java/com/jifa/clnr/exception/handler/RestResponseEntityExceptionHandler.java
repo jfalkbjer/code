@@ -35,11 +35,21 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	@Autowired
 	private SpanAccessor spanAccessor;
 
-	@ExceptionHandler(value = { IllegalArgumentException.class })
+	@ExceptionHandler(value = { IllegalArgumentException.class, Exception.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest webRequest) {
 		Span span = spanAccessor.getCurrentSpan();
-		Error error = new Error(Span.idToHex(span.getTraceId()), HttpStatus.NOT_FOUND.value(), exception.getMessage());
-		return handleExceptionInternal(exception, error, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
+		HttpStatus httpStatus = getHttpStatus(exception);
+
+		Error error = new Error(Span.idToHex(span.getTraceId()), httpStatus.value(), exception.getMessage());
+		return handleExceptionInternal(exception, error, new HttpHeaders(), httpStatus, webRequest);
+	}
+
+	private HttpStatus getHttpStatus(Exception exception) {
+		if (exception instanceof IllegalArgumentException) {
+			return HttpStatus.NOT_FOUND;
+		}
+
+		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 
 }
