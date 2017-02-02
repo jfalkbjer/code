@@ -16,6 +16,7 @@
 
 package com.jifa.clnr.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -23,5 +24,7 @@ import lombok.Data;
  */
 @Data
 public class BankName {
+
+	@ApiModelProperty(value = "Holds the bank name.", required = true)
 	private final String name;
 }
