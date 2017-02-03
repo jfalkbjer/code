@@ -31,6 +31,7 @@ import com.jifa.clnr.cache.BankNameCache;
 import com.jifa.clnr.model.BankName;
 import com.jifa.clnr.model.ClearingNumbers;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 
  */
+@Api(tags = "Clearing Number services")
 @Slf4j
 @RestController
 public class ClearingNumberRestController {
