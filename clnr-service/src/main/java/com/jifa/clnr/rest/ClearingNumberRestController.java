@@ -69,7 +69,7 @@ public class ClearingNumberRestController {
 	@ApiOperation(value = "Get bank name for the specified clearing number.", notes = "bla bla bla")
 	@RequestMapping(method = RequestMethod.GET, value = "/numbers/{clearing-number}")
 	public BankName getBankName(@ApiIgnore HttpEntity<String> httpEntity,
-			@ApiParam(value = "Clearing number to get bank name for.") @PathVariable(value = "clearing-number") String clearingNumber) {
+			@ApiParam(value = "Clearing number to get bank name for.", required = true) @PathVariable(value = "clearing-number") String clearingNumber) {
 		log.info("Request headers: {}", httpEntity.getHeaders());
 
 		if (bankNameCache.contains(clearingNumber)) {
