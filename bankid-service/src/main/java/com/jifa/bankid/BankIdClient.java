@@ -1,6 +1,7 @@
 package com.jifa.bankid;
 
 import com.bankid.rpservice.v4_0_0.types.AuthenticateRequestType;
+import com.bankid.rpservice.v4_0_0.types.CollectResponseType;
 import com.bankid.rpservice.v4_0_0.types.ObjectFactory;
 import com.bankid.rpservice.v4_0_0.types.OrderResponseType;
 
@@ -16,6 +17,13 @@ public class BankIdClient extends AbstractBankIdClient {
 				objectFactory.createAuthenticateRequest(request));
 
 		return new AuthenticateResponse(orderResponseType.getOrderRef());
+	}
+
+	public CollectResponseType collect(String orderRef) {
+		CollectResponseType collectResponseType = makeCall(CollectResponseType.class,
+				objectFactory.createOrderRef(orderRef));
+
+		return collectResponseType;
 	}
 
 }

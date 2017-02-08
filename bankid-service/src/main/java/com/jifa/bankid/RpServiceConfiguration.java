@@ -63,6 +63,11 @@ public class RpServiceConfiguration {
 		bankIdClient.setUnmarshaller(marshaller);
 		bankIdClient.setMessageSender(messageSender);
 
+		// No need to configure, since it is the default resolver. Look into
+		// creating my own that maps to the schema.
+		// bankIdClient.getWebServiceTemplate().setFaultMessageResolver(new
+		// SoapFaultMessageResolver());
+
 		return bankIdClient;
 	}
 
