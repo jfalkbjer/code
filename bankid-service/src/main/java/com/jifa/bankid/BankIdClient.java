@@ -4,6 +4,7 @@ import com.bankid.rpservice.v4_0_0.types.AuthenticateRequestType;
 import com.bankid.rpservice.v4_0_0.types.CollectResponseType;
 import com.bankid.rpservice.v4_0_0.types.ObjectFactory;
 import com.bankid.rpservice.v4_0_0.types.OrderResponseType;
+import com.bankid.rpservice.v4_0_0.types.ProgressStatusType;
 
 public class BankIdClient extends AbstractBankIdClient {
 
@@ -16,14 +17,23 @@ public class BankIdClient extends AbstractBankIdClient {
 		OrderResponseType orderResponseType = makeCall(OrderResponseType.class,
 				objectFactory.createAuthenticateRequest(request));
 
-		return new AuthenticateResponse(orderResponseType.getOrderRef());
+		return new AuthenticateResponse(orderResponseType.getOrderRef(), orderResponseType.getAutoStartToken());
 	}
 
-	public CollectResponseType collect(String orderRef) {
+	public CollectResponse collect(CollectRequest collectRequest) {
 		CollectResponseType collectResponseType = makeCall(CollectResponseType.class,
-				objectFactory.createOrderRef(orderRef));
+				objectFactory.createOrderRef(collectRequest.getOrderRef()));
 
-		return collectResponseType;
+		UserInfo userInfo = null;
+
+		if (collectResponseType.getProgressStatus() == ProgressStatusType.COMPLETE) {
+			userInfo = new UserInfo(collectResponseType.getUserInfo().getName(),
+					collectResponseType.getUserInfo().getGivenName(), collectResponseType.getUserInfo().getSurname(),
+					collectResponseType.getUserInfo().getPersonalNumber());
+		}
+
+		return new CollectResponse(ProgressStatus.valueOf(collectResponseType.getProgressStatus().name()),
+				collectResponseType.getSignature(), userInfo);
 	}
 
 }

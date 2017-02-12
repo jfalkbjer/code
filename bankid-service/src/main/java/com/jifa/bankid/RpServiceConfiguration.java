@@ -75,7 +75,7 @@ public class RpServiceConfiguration {
 			throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
 		KeyStore keystore = createKeyStore(bankIdProperties.getTrustStore(), "JKS",
 				bankIdProperties.getTrustStorePassword());
-		log.info("Loaded truststore: {0}", bankIdProperties.getTrustStore().getURI().toString());
+		log.info("Loaded truststore: " + bankIdProperties.getTrustStore().getURI().toString());
 
 		TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 		factory.init(keystore);
@@ -87,7 +87,7 @@ public class RpServiceConfiguration {
 			CertificateException, UnrecoverableKeyException {
 		KeyStore keystore = createKeyStore(bankIdProperties.getKeyStore(), "PKCS12",
 				bankIdProperties.getKeyStorePassword());
-		log.info("Loaded keystore: {0}", bankIdProperties.getKeyStore().getURI().toString());
+		log.info("Loaded keystore: " + bankIdProperties.getKeyStore().getURI().toString());
 
 		KeyManagerFactory factory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 		factory.init(keystore, bankIdProperties.getKeyStorePassword().toCharArray());

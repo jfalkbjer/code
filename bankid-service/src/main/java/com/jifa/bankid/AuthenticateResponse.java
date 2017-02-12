@@ -6,5 +6,6 @@ import lombok.Data;
 public class AuthenticateResponse {
 
 	private final String orderRef;
+	private final String autoStartToken;
 
 }

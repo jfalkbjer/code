@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(force = true)
 @Data
-public class AuthenticateRequest {
+public class CollectRequest {
 
 	@NotNull
-	private final String personalNumber;
+	private final String orderRef;
 }
