@@ -58,10 +58,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 
-			<!-- /Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk/Contents/Home/jre/lib/jaxb.properties. 
-				Add row javax.xml.accessExternalSchema=all to be able to generate classes. -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
@@ -72,6 +73,9 @@
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
+							<vmArgs>
+								<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+							</vmArgs>
 							<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
 						</configuration>
 					</execution>
