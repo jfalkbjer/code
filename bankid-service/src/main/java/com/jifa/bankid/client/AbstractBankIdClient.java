@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.client;
 
 import javax.xml.bind.JAXBElement;
 

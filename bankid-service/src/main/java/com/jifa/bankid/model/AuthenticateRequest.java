@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.model;
 
 import javax.validation.constraints.NotNull;
 
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(force = true)
 @Data
-public class CollectRequest {
+public class AuthenticateRequest {
 
 	@NotNull
-	private final String orderRef;
+	private final String personalNumber;
 }

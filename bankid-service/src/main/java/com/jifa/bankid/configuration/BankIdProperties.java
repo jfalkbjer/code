@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;

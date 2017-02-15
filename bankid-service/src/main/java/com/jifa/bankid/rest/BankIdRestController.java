@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.rest;
 
 import javax.validation.Valid;
 
@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.jifa.bankid.client.BankIdClient;
+import com.jifa.bankid.model.AuthenticateRequest;
+import com.jifa.bankid.model.AuthenticateResponse;
+import com.jifa.bankid.model.CollectRequest;
+import com.jifa.bankid.model.CollectResponse;
 
 @RestController
 public class BankIdRestController {

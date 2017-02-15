@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.model;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;

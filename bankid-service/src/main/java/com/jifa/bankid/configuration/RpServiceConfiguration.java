@@ -1,4 +1,4 @@
-package com.jifa.bankid;
+package com.jifa.bankid.configuration;
 
 import java.io.IOException;
 import java.security.KeyStore;
@@ -17,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.transport.http.HttpsUrlConnectionMessageSender;
+
+import com.jifa.bankid.client.BankIdClient;
 
 import lombok.extern.slf4j.Slf4j;
 
