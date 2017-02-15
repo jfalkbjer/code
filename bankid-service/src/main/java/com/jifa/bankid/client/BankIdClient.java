@@ -1,15 +1,20 @@
 package com.jifa.bankid.client;
 
+import org.springframework.util.Base64Utils;
+
 import com.bankid.rpservice.v4_0_0.types.AuthenticateRequestType;
 import com.bankid.rpservice.v4_0_0.types.CollectResponseType;
 import com.bankid.rpservice.v4_0_0.types.ObjectFactory;
 import com.bankid.rpservice.v4_0_0.types.OrderResponseType;
 import com.bankid.rpservice.v4_0_0.types.ProgressStatusType;
+import com.bankid.rpservice.v4_0_0.types.SignRequestType;
 import com.jifa.bankid.model.AuthenticateRequest;
 import com.jifa.bankid.model.AuthenticateResponse;
 import com.jifa.bankid.model.CollectRequest;
 import com.jifa.bankid.model.CollectResponse;
 import com.jifa.bankid.model.ProgressStatus;
+import com.jifa.bankid.model.SignRequest;
+import com.jifa.bankid.model.SignResponse;
 import com.jifa.bankid.model.UserInfo;
 
 public class BankIdClient extends AbstractBankIdClient {
@@ -40,6 +45,18 @@ public class BankIdClient extends AbstractBankIdClient {
 
 		return new CollectResponse(ProgressStatus.valueOf(collectResponseType.getProgressStatus().name()),
 				collectResponseType.getSignature(), userInfo);
+	}
+
+	public SignResponse sign(SignRequest signRequest) {
+		SignRequestType request = objectFactory.createSignRequestType();
+		request.setPersonalNumber(signRequest.getPersonalNumber());
+		request.setUserVisibleData(Base64Utils.encodeToString(signRequest.getUserVisibleData().getBytes()));
+
+		OrderResponseType orderResponseType = makeCall(OrderResponseType.class,
+				objectFactory.createSignRequest(request));
+
+		return new SignResponse(orderResponseType.getOrderRef(), orderResponseType.getAutoStartToken());
+
 	}
 
 }

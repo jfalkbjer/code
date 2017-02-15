@@ -14,6 +14,8 @@ import com.jifa.bankid.model.AuthenticateRequest;
 import com.jifa.bankid.model.AuthenticateResponse;
 import com.jifa.bankid.model.CollectRequest;
 import com.jifa.bankid.model.CollectResponse;
+import com.jifa.bankid.model.SignRequest;
+import com.jifa.bankid.model.SignResponse;
 
 @RestController
 public class BankIdRestController {
@@ -29,6 +31,11 @@ public class BankIdRestController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/collect")
 	public CollectResponse authenticate(@RequestBody @Valid CollectRequest collectRequest) {
 		return bankIdClient.collect(collectRequest);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/sign")
+	public SignResponse sign(@RequestBody @Valid SignRequest signRequest) {
+		return bankIdClient.sign(signRequest);
 	}
 
 }
