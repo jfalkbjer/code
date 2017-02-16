@@ -14,6 +14,9 @@ public class SignRequest {
 	@Pattern(regexp = "\\d{10,12}")
 	private final String personalNumber;
 
+	@NotNull
 	private final String userVisibleData;
+
+	private final String userNonVisibleData;
 
 }

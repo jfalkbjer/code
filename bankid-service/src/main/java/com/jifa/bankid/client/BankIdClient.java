@@ -1,6 +1,7 @@
 package com.jifa.bankid.client;
 
 import org.springframework.util.Base64Utils;
+import org.springframework.util.StringUtils;
 
 import com.bankid.rpservice.v4_0_0.types.AuthenticateRequestType;
 import com.bankid.rpservice.v4_0_0.types.CollectResponseType;
@@ -51,6 +52,10 @@ public class BankIdClient extends AbstractBankIdClient {
 		SignRequestType request = objectFactory.createSignRequestType();
 		request.setPersonalNumber(signRequest.getPersonalNumber());
 		request.setUserVisibleData(Base64Utils.encodeToString(signRequest.getUserVisibleData().getBytes()));
+
+		if (!StringUtils.isEmpty(signRequest.getUserNonVisibleData())) {
+			request.setUserNonVisibleData(Base64Utils.encodeToString(signRequest.getUserNonVisibleData().getBytes()));
+		}
 
 		OrderResponseType orderResponseType = makeCall(OrderResponseType.class,
 				objectFactory.createSignRequest(request));
