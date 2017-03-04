@@ -37,6 +37,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { IllegalArgumentException.class, Exception.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest webRequest) {
+		// If using 128 bit hex for traceId, we need to use concat traceIdHigh +
+		// traceId.
 		String traceId = Span.idToHex(spanAccessor.getCurrentSpan().getTraceId());
 		HttpStatus httpStatus = getHttpStatus(exception);
 		Error error = new Error(traceId, httpStatus.value(), exception.getMessage());

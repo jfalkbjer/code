@@ -45,8 +45,8 @@ public class BankNameCache {
 	 * 
 	 * <pre>
 	 * Key           Value
-	 * '3300'      : 'Nordea Personkonto'
-	 * '3783,4999' : 'Nordea'
+	 * '9950'      : 'Nykredit'
+	 * '9960-9969' : 'Nordea'
 	 * </pre>
 	 * 
 	 * @param clearingNumbers {@link Map}
@@ -83,7 +83,7 @@ public class BankNameCache {
 	private void createCache(String range, String bankName) {
 		log.info("Setting up {} with range {}", bankName, range);
 
-		String[] rangeValues = range.split(",");
+		String[] rangeValues = range.split("-");
 
 		if (rangeValues.length == 1) {
 			map.put(rangeValues[0], new BankName(bankName));
