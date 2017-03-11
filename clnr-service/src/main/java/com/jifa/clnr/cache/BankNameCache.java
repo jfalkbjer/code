@@ -83,15 +83,17 @@ public class BankNameCache {
 	private void createCache(String range, String bankName) {
 		log.info("Setting up {} with range {}", bankName, range);
 
+		BankName bankNameInstance = new BankName(bankName);
+
 		String[] rangeValues = range.split("-");
 
 		if (rangeValues.length == 1) {
-			map.put(rangeValues[0], new BankName(bankName));
+			map.put(rangeValues[0], bankNameInstance);
 		} else if (rangeValues.length == 2) {
 			int from = Integer.valueOf(rangeValues[0]).intValue();
 			int to = Integer.valueOf(rangeValues[1]).intValue() + 1;
 
-			IntStream.range(from, to).forEach(i -> map.put(String.valueOf(i), new BankName(bankName)));
+			IntStream.range(from, to).forEach(i -> map.put(String.valueOf(i), bankNameInstance));
 		}
 	}
 
