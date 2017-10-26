@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,37 +46,47 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 public class ClearingNumberRestController {
 
-	@Autowired
-	BankNameCache bankNameCache;
+    @Autowired
+    BankNameCache bankNameCache;
 
-	@ApiOperation(value = "Get all available clearing numbers.", notes = "bla bla bla")
-	@RequestMapping(method = RequestMethod.GET, value = "/numbers")
-	public ClearingNumbers getClearingNumbers(@ApiIgnore HttpEntity<String> httpEntity) {
-		log.info("Request headers: {}", httpEntity.getHeaders());
+    @Value("${attribute.source}")
+    private String attribute;
 
-		List<String> numbers = new ArrayList<String>(bankNameCache.getClearingNumbers());
-		Collections.sort(numbers);
+    @ApiOperation(value = "Get all available clearing numbers.", notes = "bla bla bla")
+    @RequestMapping(method = RequestMethod.GET, value = "/numbers")
+    public ClearingNumbers getClearingNumbers(@ApiIgnore HttpEntity<String> httpEntity) {
+        log.info("Request headers: {}", httpEntity.getHeaders());
 
-		return new ClearingNumbers(numbers);
-	}
+        List<String> numbers = new ArrayList<String>(bankNameCache.getClearingNumbers());
+        Collections.sort(numbers);
 
-	/**
-	 * Get bank name based on clearing number. Will return 404 Not found, if no
-	 * bank name is associated with the clearing number.
-	 * 
-	 * @param clearingNumber String with a clearing number.
-	 * @return {@link BankName}
-	 */
-	@ApiOperation(value = "Get bank name for the specified clearing number.", notes = "bla bla bla")
-	@RequestMapping(method = RequestMethod.GET, value = "/numbers/{clearing-number}")
-	public BankName getBankName(@ApiIgnore HttpEntity<String> httpEntity,
-			@ApiParam(value = "Clearing number to get bank name for.", required = true) @PathVariable(value = "clearing-number") String clearingNumber) {
-		log.info("Request headers: {}", httpEntity.getHeaders());
+        return new ClearingNumbers(numbers);
+    }
 
-		if (bankNameCache.contains(clearingNumber)) {
-			return bankNameCache.getBankName(clearingNumber);
-		}
+    /**
+     * Get bank name based on clearing number. Will return 404 Not found, if no
+     * bank name is associated with the clearing number.
+     * 
+     * @param clearingNumber String with a clearing number.
+     * @return {@link BankName}
+     */
+    @ApiOperation(value = "Get bank name for the specified clearing number.", notes = "bla bla bla")
+    @RequestMapping(method = RequestMethod.GET, value = "/numbers/{clearing-number}")
+    public BankName getBankName(@ApiIgnore HttpEntity<String> httpEntity,
+            @ApiParam(value = "Clearing number to get bank name for.", required = true) @PathVariable(value = "clearing-number") String clearingNumber) {
+        log.info("Request headers: {}", httpEntity.getHeaders());
 
-		throw new IllegalArgumentException("No bank name found for specified clearing number.");
-	}
+        if (bankNameCache.contains(clearingNumber)) {
+            return bankNameCache.getBankName(clearingNumber);
+        }
+
+        throw new IllegalArgumentException("No bank name found for specified clearing number.");
+    }
+
+    @ApiOperation(value = "Get attribute value.", notes = "bla bla bla")
+    @RequestMapping(method = RequestMethod.GET, value = "/attribute")
+    public String getAttribute() {
+        return attribute;
+    }
+
 }

@@ -18,17 +18,16 @@ package com.jifa.clnr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
 
 /**
  * Main clearing number application.
  */
-@PropertySource("classpath:application-${spring.profiles.active}.properties")
+// @PropertySource("classpath:application-${spring.profiles.active}.properties")
 @SpringBootApplication
 public class ClearingNumberServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ClearingNumberServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ClearingNumberServiceApplication.class, args);
+    }
 
 }
